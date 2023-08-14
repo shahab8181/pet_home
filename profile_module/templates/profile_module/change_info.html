@@ -1,0 +1,40 @@
+{% extends 'shared/_main.html' %}
+{% load thumbnail %}
+
+{% block title %}change user information | تغییر اطلاعات کاربری{% endblock %}
+
+{% block content %}
+<section class="container-fluid text-lg-right text-center mt-4 p-3 mb-5">
+    <div class="row d-flex align-items-center pt-lg-5">
+        <ul class="list-group">
+            {% include 'profile_module/includes/panel.html' with single=single %}
+            &nbsp; 
+        </ul>
+        &nbsp; &nbsp; &nbsp; 
+        <form action="{% url 'changeinformation-page' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            {% for field in change_information_form %}
+                {% if field.name == 'avatar' %}
+                    <hr>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                    {% thumbnail online_user.avatar "300x300" qaulity=95 crop='center' as img %}
+                        عکس فعلی: <img src="{{ img.url }}" alt="">
+                        <br>
+                    {% endthumbnail %}
+                    <hr>
+                {% else %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                {% endif %}
+
+            {% endfor %}
+            &nbsp; 
+            <div class="form-group col-md-6 d-flex justify-content-start">
+                <button type="submit" class="btn btn-lightorng login-btn">ثبت</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

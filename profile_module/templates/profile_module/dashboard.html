@@ -1,0 +1,13 @@
+{% extends 'shared/_main.html' %}
+
+{% block title %}dashboard | پنل کاربری{% endblock %}
+
+{% block content %}
+<section class="container-fluid text-lg-right text-center mt-4 p-3 mb-5">
+    <div class="row d-flex align-items-center pt-lg-5">
+        <ul class="list-group">
+            {% include 'profile_module/includes/panel.html' with single=single %}
+        </ul>
+    </div>
+</section>
+{% endblock %}

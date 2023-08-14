@@ -1,0 +1,46 @@
+{% extends 'shared/_main.html' %}
+{% load shahab_tags %}
+
+{% block title %}List of recent bills | لیست صورت حساب های اخیر{% endblock %}
+
+{% block content %}
+<section class="container-fluid text-lg-right text-center mt-4 p-3 mb-5">
+    <div class="row d-flex align-items-center pt-lg-5">
+        <ul class="list-group">
+            {% include 'profile_module/includes/panel.html' with single=single %}
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        </ul>
+            <div class="col-md-8" id="built-in">
+                    {% if orders %}
+                        <table class="table table-responsive table-hover table-striped">
+                            <tr>
+                                <th class="text-right">شناسه</th>
+                                <th class="text-right">تاریخ تایید فاکتور</th>
+                                <th class="text-right">قیمت نهایی خرید</th>
+                                <th class="text-right">دستورات</th>
+                            </tr>
+                            {% for order in orders %}
+                                <tr>
+                                    <td class="text-right">{{ order.id }}</td>
+                                    <td class="text-right">{{ order.date_of_payment | ctj }}</td>
+                                    <td class="text-right">{{ order.final_price | td }} تومان</td>
+                                    <td><a href="{% url 'invoicedetail-page' pk=order.pk %}" class="btn btn-success">جزییات</a></td>
+                                </tr>
+                        {% endfor %}
+                        </table>
+                            <div class="col-8 text-center mx-auto">
+                                <ul class="pagination justify-content-right">
+                                    {% for pagenumber in paginator.page_range %}
+                                        <li class="page-item {% if page_obj.number == pagenumber %} active {% endif %}"><a class="page-link" href="?page={{ pagenumber }}">{{ pagenumber }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                    {% else %}
+                        <center>
+                            <p>صورتحسابی یافت نشد!</p>
+                        </center>
+                    {% endif %}
+            </div>
+    </div>
+</section>
+{% endblock %}

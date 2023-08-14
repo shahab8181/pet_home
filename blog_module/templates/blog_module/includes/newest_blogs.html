@@ -1,0 +1,18 @@
+{% load shahab_tags %}
+{% load thumbnail %}
+
+<li class="my-1">
+    <div class="d-flex align-items-center justify-content-between">
+        {% thumbnail blog.image "56x56" quality=80 crop='center' as img %}
+            <a href="{% url 'blog-page' slug=blog.slug %}"><img src="{{ img.url }}" /></a>
+        {% endthumbnail %}
+        <div class="mr-2">
+            <p><a href="{% url 'blog-page' slug=blog.slug %}">{{ blog.title }}</a></p>
+            <p>{{ blog.date_created | ctj }}</p>
+        </div>
+    </div>
+    {% if forloop.last %}
+    {% else %}
+        <hr>
+    {% endif %}
+</li>
